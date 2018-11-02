@@ -1,0 +1,30 @@
+﻿@model IEnumerable<Twitter.MVC.Entities.Follower>
+
+@{
+    ViewBag.Title = "Messages";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card shadow">
+    
+    <form action="" method="post">
+        <div class="card-header">
+            <h3>Messages</h3>
+        </div>
+        <div class="card-body">
+            <div class="input-group">
+                <select class="custom-select">
+                    @foreach (var item in Model)
+                    {
+                        <option value="@item.Follow.UserId">@item.Follow.DisplayName</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="float-right">
+                <input class="btn btn-dark" type="submit" value="Gönder"/>
+            </div>
+        </div>
+    </form>
+</div>

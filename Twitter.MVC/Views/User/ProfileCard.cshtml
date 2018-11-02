@@ -1,0 +1,30 @@
+﻿@if (Session["KullaniciAdi"] != null)
+{
+    <div class="card shadow">
+        <div class="card-header">
+            Profil
+            <div class="float-right">
+                <a href="#" class="btn btn-link">Güncelle</a>
+            </div>
+        </div>
+        <div class="card-body">
+            <img class="img-fluid rounded-circle" src="https://roiproperties.com/wp-content/uploads/2017/06/user_profile_female.jpg" alt="Profil İsmi"/>
+            <hr/>
+            <div class="row d-flex justify-content-center">
+                <h5 class="card-title">@Session["KullaniciAdi"]</h5>
+            </div>
+            <p class="card-text">@(Session["Description"] != null ? Session["Description"] : "")</p>
+        </div>
+    </div>
+}
+else
+{
+    <div class="card shadow">
+        <h5 class="card-header">Profil</h5>
+        <div class="card-body">
+            <center>
+                Lütfen Giriş Yapınız
+            </center>
+        </div>
+    </div>
+}

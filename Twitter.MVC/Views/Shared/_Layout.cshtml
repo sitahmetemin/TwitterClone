@@ -1,0 +1,178 @@
+﻿@using Twitter.MVC.Controllers
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+@*<div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li>@Html.ActionLink("About", "About", "Home")</li>
+                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    </ul>
+                </div>
+            </div>
+        </div>*@
+
+
+<nav class="navbar navbar-expand-lg  navbar-dark bg-primary fixed-top">
+    <div class="container justify-content-center">
+        <a class="navbar-brand" href="/home">
+            <img src="https://pre00.deviantart.net/239a/th/pre/i/2014/106/6/c/random_logo_by_criticl-d7eqdvw.png" height="30" alt="">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/home">Home<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/home/trends">Trend</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/home/hashtags">Hastags</a>
+                </li>
+                @if (Session["KullaniciAdi"] != null)
+                {
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/user/index">Profile</a>
+                    </li>
+                }
+            </ul>
+            @*<form class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-default my-2 my-sm-0" type="submit">Search</button>
+                    </form>*@
+            @if (Session["KullaniciAdi"] != null)
+            {
+                <a class="btn btn-dark float-right" href="/home/singout">
+                    <i class="fa fa-sign-out"></i>
+                </a>
+            }
+            else
+            {
+                <div style="margin-left: 5px;" class="float-right">
+                    <button class="btn btn-default" data-toggle="modal" data-target="#exampleModal">
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                    </button>
+                </div>
+            }
+
+        </div>
+    </div>
+</nav>
+
+
+<div class="container" style="padding-top: 70px;">
+    <div class="row">
+        <div class="col-3">
+             @Html.Action("ProfileCard", "Home")
+        </div>
+        <div class="col-6">
+            @RenderBody()
+        </div>
+        <div class="col-3">
+            @Html.Partial("Hastags")
+        </div>
+    </div>
+    <hr/>
+    <footer class="fixed-bottom">
+        <div class="container">
+            <p>&copy; @DateTime.Now.Year - Twitter Clone App</p>
+        </div>
+    </footer>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Login</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Giriş Yap</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Üye Ol</a>
+                    </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <form method="post">
+                            <!-- Form-->
+                            <div class="form-group">
+                                <label>Kullanıcı Adı:</label><input name="DisplayName" class="form-control" type="text"/>
+                                <label>Kullanıcı Şifre:</label><input name="Password" class="form-control" type="text"/>
+                            </div>
+                            <div class="modal-footer">
+                                <div class="float-right">
+                                    <button class="btn btn-primary" type="submit" name="Giris">
+                                        Giriş Yap
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                        <form method="post">
+                            <!-- Form-->
+                            <div class="form-group">
+                                <label>Kullanıcı Nick:</label><input name="DisplayName" class="form-control" type="text"/>
+                                <label>Kullanıcı Adı:</label><input name="FirstName" class="form-control" type="text"/>
+                                <label>Kullanıcı Soyad:</label><input name="Lastname" class="form-control" type="text"/>
+                                <label>Kullanıcı Email:</label><input name="email" class="form-control" type="email"/>
+                                <label>Kullanıcı Şifre:</label><input name="Password" class="form-control" type="password"/>
+                                <div class="modal-footer">
+                                    <div class="float-right">
+                                        <button class="btn btn-primary" type="submit" name="Kaydol">
+                                            Kaydol
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    $('#myModal').on('shown.bs.modal',
+        function() {
+            $('#myInput').trigger('focus')
+        })
+
+</script>
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+@RenderSection("scripts", required: false)
+</body>
+</html>

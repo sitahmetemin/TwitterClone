@@ -1,0 +1,66 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+
+@if (Session["KullaniciAdi"] != null)
+{
+    <div class="card shadow mb-3">
+        <div class="card-body bg-secondary">
+            <form action="/home/tweetle" method="post">
+                <div class="input-group">
+                    <input name="tweet" type="text" class="form-control" placeholder="Tweetle">
+                    <div class="input-group-append">
+                        <button class="btn btn-default" type="submit" id="button-addon2">
+                            <i class="fa fa-twitter"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+}
+
+@foreach (var item in ViewBag.bilgiler)
+{
+    <div class="card shadow mb-4">
+        <div class="card-header">
+            <div class="float-left">
+                <img width="50px;" class="rounded-circle" src="https://roiproperties.com/wp-content/uploads/2017/06/user_profile_female.jpg" alt="Alternate Text"/>
+            </div>
+            <h4>&nbsp;@item.User.DisplayName</h4>
+            @if (Session["KullaniciAdi"] != null)
+            {
+                <a title="Takipten Çık" href="/User/UnFollow/@item.User.UserId" class="btn btn-outline-danger float-right">
+                    <i class="fa fa-user-times"></i>
+                </a>
+            }
+        </div>
+        <div class="card-body">
+            <p class="card-text">@item.Content</p>
+            @if (Session["KullaniciAdi"] != null)
+            {
+                <div class="float-right">
+                    <div class="row">
+                        <a title="ReTweet" class="btn btn-sm btn-outline-info" href="/Home/ReTweet/@item.TweetId">
+                            <i class="fa fa-refresh"></i>
+                        </a>
+                        <a title="Beğeni" class="btn btn-sm btn-outline-primary" href="/Home/Like/@item.TweetId">
+                            <i class="fa fa-heart"></i>
+                        </a>
+
+                        <a title="Yorum" class="btn btn-sm btn-outline-dark" href="/Home/Comment/@item.TweetId">
+                            <i class="fa fa-exchange"></i>
+                        </a>
+                        @*<form name="yorum" method="post">
+                                    <input type="hidden" name="userId" value="@item.User.UserId" />
+                                    <input type="hidden" name="TweetId" value="@item.TweetId" />
+                                    <input type="submit" class="btn btn-info" value="Yorum" />
+                                </form>*@
+                    </div>
+
+                </div>
+            }
+        </div>
+    </div>
+}

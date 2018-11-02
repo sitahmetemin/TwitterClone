@@ -1,0 +1,47 @@
+﻿@model IEnumerable<Twitter.MVC.Entities.Tweet>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@foreach (var item in Model)
+{
+
+    if (item.ParentId > 0)
+    {
+        
+    }
+    <div class="card shadow mb-3">
+        
+        <div class="card-header">
+            @if (item.ParentId > 0)
+            {
+                <div class="alert-info">
+                    ReTweetlendi
+                </div>
+            }
+            <div class="align-content-center">
+                <div class="float-left">
+                    <img width="50px;" class="rounded-circle" src="https://roiproperties.com/wp-content/uploads/2017/06/user_profile_female.jpg" alt="Profil Photo"/>
+                </div>
+                <h4>&nbsp;@item.User.DisplayName</h4>
+                @*<div class="float-right">
+                    <a href="/user/editTweet/@item.TweetId" class="btn btn-sm btn-warning">&nbsp;<i class="fa fa-edit"></i></a>
+                </div>*@
+                <div class="float-right">
+                    <a href="/user/RemoveTweet/@item.TweetId" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
+                </div>
+            </div>
+
+        </div>
+        <div class="card-body">
+            <p class="card-text">@item.Content</p>
+        </div>
+    </div>
+}
+
+<script>
+    $(function() {
+
+    });
+</script>

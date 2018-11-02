@@ -1,0 +1,63 @@
+﻿@model Twitter.MVC.Models.ViewModel.NotUserPViewModel
+@if (Session["KullaniciAdi"] != null)
+{
+    <div class="card shadow">
+        <div class="card-header">
+            <div class="float-left">
+                Profil
+            </div>
+            <div class="float-right">
+                <a href="/user/UserUpdate/@Session["ID"]" class="btn btn-outline-dark">
+                    <i class="fa fa-user-circle"></i>
+                </a>
+            </div>
+        </div>
+        <div class="card-body">
+            <img class="img-fluid rounded-circle" src="https://roiproperties.com/wp-content/uploads/2017/06/user_profile_female.jpg" alt="Profil İsmi"/>
+            <hr/>
+            <div class="row d-flex justify-content-center">
+                <h5 class="card-title">@Session["KullaniciAdi"]</h5>
+            </div>
+
+            <p class="card-text">@(Session["Description"] != null ? Session["Description"] : "")</p>
+            <div class="text-center">
+                <a href="/user/index" class="btn btn-primary">Profile Git</a>
+                <a href="/user/messages" class="btn btn-info">Mesajlar</a>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="card shadow-lg">
+        <h5 class="card-header">Kişi Önerileri</h5>
+        <div class="card-body">
+            @foreach (var UNuser in Model.Followers)
+            {
+                <div class="row">
+                    <div class="col-8">
+
+                        <a href="/profile/@UNuser.User.UserId">
+                            @UNuser.User.DisplayName
+                        </a>
+                    </div>
+                    <div class="col-4">
+                        <a href="/User/Follow/@UNuser.User.UserId">
+                            <h5 class="btn btn-sm btn-outline-primary">Takip Et</h5>
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}
+else
+{
+    <div class="card shadow">
+        <h5 class="card-header">Profil</h5>
+        <div class="card-body">
+            <center>
+                Lütfen Giriş Yapınız
+            </center>
+        </div>
+    </div>
+}
